@@ -7,7 +7,7 @@ LV_Embedded
 
 void TIM4_Config()
 {
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6,ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);
 
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
     TIM_TimeBaseStructure.TIM_Period= 0xffff;
@@ -33,6 +33,6 @@ void TIM4Interrupt_Config()
 }
 void Timer4Delay_us(uint32_t us)
 {
-    TIM_SetCounter(TIM6,0);
-    while(TIM_GetCounter(TIM6)<us);
+    TIM_SetCounter(TIM4,0);
+    while(TIM_GetCounter(TIM4)<us);
 }

@@ -6,7 +6,7 @@
 #ifndef MAX44009_H
 #define MAX44009_H
 
-#include "../Src/stm32f10x.h"
+#include "stm32f10x.h"
 #include "I2C.h"
 #include "Systick.h"  
 #include <math.h>
