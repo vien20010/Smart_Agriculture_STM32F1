@@ -12,8 +12,15 @@
 uint8_t data[4];
 float DHT11_temp=0, DHT11_humd=0;
 
+/** 
+ * @brief - Init Sensor: Pull DATA Line down 18ms, after that release it. 
+ * @param - None
+ * @retval - None
+ */
+
 void DHT11_Start(void)
 {
+		RCC_APB2PeriphClockCmd(DHT11_CLK,ENABLE);
     Set_Pin_Output(DHT11_PORT, DHT11_PIN);
     GPIO_WriteBit(DHT11_PORT, DHT11_PIN, 0);
     SystickDelay_ms(18);
@@ -21,6 +28,12 @@ void DHT11_Start(void)
     Timer4Delay_us(20);
     Set_Pin_Input(DHT11_PORT, DHT11_PIN);
 }
+
+/** 
+ * @brief - Indicate sensor's present
+ * @param - None
+ * @retval - 0 if can't detect sensor's presnet, 1 if it's reverse
+ */
 
 int8_t DHT11_Check_Response(void)
 {
@@ -39,6 +52,12 @@ int8_t DHT11_Check_Response(void)
     return Response;
 }
 
+/** 
+ * @brief - Get data sensor
+ * @param - None
+ * @retval - 8 bits data sensor
+ */
+
 uint8_t DHT11_Read(void)
 {
     uint8_t i,j;
@@ -56,6 +75,13 @@ uint8_t DHT11_Read(void)
     return i;
 }
 
+/** 
+ * @brief - Get Temp and Humd from data sensor read
+ * @param - None
+ * @retval - None
+ *
+ */
+
 void DHT11_GetData(void)
 {
     //int Presence;
@@ -71,6 +97,6 @@ void DHT11_GetData(void)
 
     DHT11_temp=(float)*(data+2)+(float)*(data+3)/10.0;
     DHT11_humd=(float)*(data)+(float)*(data+1)/10.0;
-    SystickDelay_ms(500);
+    SystickDelay_ms(2000);
 }
 
