@@ -15,10 +15,10 @@
 #include "Systick.h"
 #include "Timerx.h"
 
-#define DHT11_PORT              GPIOA
-#define DHT11_PIN               GPIO_Pin_1
-#define DHT11_PIN_SOURCE        GPIO_PinSource1
-#define DHT11_CLK               RCC_APB2Periph_GPIOA
+#define DHT11_PORT              GPIOB
+#define DHT11_PIN               GPIO_Pin_4
+#define DHT11_PIN_SOURCE        GPIO_PinSource4
+#define DHT11_CLK               RCC_APB2Periph_GPIOB
 
 extern float DHT11_temp, DHT11_humd;
 
