@@ -25,6 +25,6 @@ extern float DHT11_temp, DHT11_humd;
 void DHT11_Start(void);
 int8_t DHT11_Check_Response(void);
 uint8_t DHT11_Read(void);
-void DHT11_GetData(void);
+uint8_t DHT11_GetData(void);
 
 #endif
