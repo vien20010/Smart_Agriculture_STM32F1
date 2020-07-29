@@ -8,18 +8,19 @@
 #include "DHT11.h"
 
 float lux=0,temp=0;
-extern float DHT11_temp, DHT11_humd;
+
 
 int main(void)
 {
+
 	Systick_Configuration();
 	MAX44009_Config();
 	TIM4_Config();
-	
 	while(1)
 	{
-		temp=DS18B20_GetTemp();
+		//temp=DS18B20_GetTemp();
 		lux=MAX44009_GetLightIntensity();
 		DHT11_GetData();
+
 	}
 }

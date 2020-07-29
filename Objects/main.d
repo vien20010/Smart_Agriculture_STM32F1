@@ -36,3 +36,4 @@
 .\objects\main.o: .\Mylib\Timerx.h
 .\objects\main.o: .\Mylib\GPIO.h
 .\objects\main.o: .\Mylib\DHT11.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

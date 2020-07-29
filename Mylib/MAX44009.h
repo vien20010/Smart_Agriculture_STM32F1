@@ -31,18 +31,18 @@
 #define MAX44009_ADDRESS 			0x94
 
 /* Define MAX44009 I2C pin connect */
-#define MAX44009_I2Cx                     I2C2
-#define MAX44009_I2Cx_CLK                 RCC_APB1Periph_I2C2
+#define MAX44009_I2Cx                     I2C1
+#define MAX44009_I2Cx_CLK                 RCC_APB1Periph_I2C1
 #define MAX44009_I2Cx_SDA_GPIO_CLK        RCC_APB2Periph_GPIOB
-#define MAX44009_I2Cx_SDA_PIN             GPIO_Pin_11
+#define MAX44009_I2Cx_SDA_PIN             GPIO_Pin_7
 #define MAX44009_I2Cx_SDA_GPIO_PORT       GPIOB
-#define MAX44009_I2Cx_SDA_SOURCE          GPIO_PinSource11
+#define MAX44009_I2Cx_SDA_SOURCE          GPIO_PinSource7
 //#define MAX44009_I2Cx_SDA_AF              GPIO_AF_I2C1
 
 #define MAX44009_I2Cx_SCL_GPIO_CLK        RCC_APB2Periph_GPIOB
-#define MAX44009_I2Cx_SCL_PIN             GPIO_Pin_10
+#define MAX44009_I2Cx_SCL_PIN             GPIO_Pin_6
 #define MAX44009_I2Cx_SCL_GPIO_PORT       GPIOB
-#define MAX44009_I2Cx_SCL_SOURCE          GPIO_PinSource10
+#define MAX44009_I2Cx_SCL_SOURCE          GPIO_PinSource6
 //#define MAX44009_I2Cx_SCL_AF              GPIO_AF_I2C1
 
 

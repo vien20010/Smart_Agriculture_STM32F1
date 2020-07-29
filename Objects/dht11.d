@@ -1,5 +1,6 @@
 .\objects\dht11.o: Mylib\DHT11.c
 .\objects\dht11.o: Mylib\DHT11.h
+.\objects\dht11.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\dht11.o: .\Src\stm32f10x.h
 .\objects\dht11.o: .\Src\core_cm3.h
 .\objects\dht11.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
