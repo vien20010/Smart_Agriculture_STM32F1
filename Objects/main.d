@@ -1,4 +1,6 @@
 .\objects\main.o: Src\main.c
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: Src\stm32f10x.h
 .\objects\main.o: Src\core_cm3.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -36,4 +38,4 @@
 .\objects\main.o: .\Mylib\Timerx.h
 .\objects\main.o: .\Mylib\GPIO.h
 .\objects\main.o: .\Mylib\DHT11.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: .\Mylib\Uart.h

@@ -112,8 +112,5 @@ uint8_t DHT11_GetData(void)
     }
     return 1;
 
-    /*         DHT11_temp = (float)*(data + 2) + (float)*(data + 3) / 10.0;
-    DHT11_humd = (float)*(data) + (float)*(data + 1) / 10.0; */
-    //SystickDelay_ms(2000);
 		
 }
