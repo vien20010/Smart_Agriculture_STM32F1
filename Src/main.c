@@ -9,6 +9,7 @@
 #include "Timerx.h"
 #include "DHT11.h"
 #include "Uart.h"
+#include "debug.h"
 
 #ifdef __GNUC__
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
@@ -19,7 +20,7 @@
 #endif /* __GNUC__ */
 
 float lux = 0, temp = 0;
-uint8_t txbuffer[22];
+uint8_t txbuffer[21];
 
 
 
@@ -27,32 +28,38 @@ uint8_t txbuffer[22];
 int main(void)
 {
 
-	uint16_t crc = 0;
+	
 	Systick_Configuration();
 	MAX44009_Config();
 	TIM4_Config();
 	USART_Config();
 	while (1)
 	{
+		uint16_t crc = 0;
 		//temp=DS18B20_GetTemp();
 		lux = MAX44009_GetLightIntensity();
 		DHT11_GetData();
-		SystickDelay_ms(500);
+		//SystickDelay_ms(500);
 
 		sprintf(txbuffer, "a%0.1f,%0.1f,%8.1f", DHT11_temp, DHT11_humd, lux);
 		for (int i = 0; *(txbuffer + i) != '\0'; i++)
 		{
-			if (*(txbuffer + i) == ' ')
-				*(txbuffer + i) = '0';
+			//if (*(txbuffer + i) == ' ')
+				//*(txbuffer + i) = '0';
 			crc += *(txbuffer + i);	
 		}
-
-		*(txbuffer + 19) = (crc & 0xFF) >> 8;
+		RS485_PutString(USARTy,"\n");
+		DBG("%x\n",*(txbuffer+11));
+		*(txbuffer + 19) = (crc >>8) & 0xFF;
 		*(txbuffer + 20) = (crc & 0xFF); 
-
-		USART_PutString(txbuffer);
-		printf("\n %d \n",strlen(txbuffer));
 		
+		DBG("%x\n",crc);
+		DBG("%x\n",*(txbuffer + 19));
+		DBG("%x\n",*(txbuffer + 20));
+		//RS485_PutString(USARTy,txbuffer);
+		//RS485_PutChar(USARTy,'\n');
+		DBG("\n %d \n",strlen(txbuffer));
+		DBG("\n %s",txbuffer);
 	}
 }
 
@@ -60,10 +67,10 @@ PUTCHAR_PROTOTYPE
 {
   /* Place your implementation of fputc here */
   /* e.g. write a character to the USART */
-  USART_SendData(USARTx, (uint8_t) ch);
+  USART_SendData(USARTy, (uint8_t) ch);
 
   /* Loop until the end of transmission */
-  while (USART_GetFlagStatus(USARTx, USART_FLAG_TC) == RESET)
+  while (USART_GetFlagStatus(USARTy, USART_FLAG_TC) == RESET)
   {}
 
   return ch;

@@ -39,3 +39,4 @@
 .\objects\main.o: .\Mylib\GPIO.h
 .\objects\main.o: .\Mylib\DHT11.h
 .\objects\main.o: .\Mylib\Uart.h
+.\objects\main.o: .\Mylib\debug.h
