@@ -70,12 +70,12 @@ extern uint8_t aRxBuffer[BUFFERSIZE];
 
 uint16_t USART_GetChar(void);
 void USART_PutChar(uint8_t c);
-void USART_PutString(uint8_t *s);
+void USART_PutString(uint8_t *s,uint8_t num);
 void USART_Config(void);
 void DMAx_Config(void);
 void RS485_Send_Enable(USART_TypeDef *USARTx);
 void RS485_Listen_Enable(USART_TypeDef *USARTx);
-void RS485_PutString(USART_TypeDef *USARTx, uint8_t *s);
+void RS485_PutString(USART_TypeDef *USARTx, uint8_t *s, uint8_t num);
 void RS485_PutChar(USART_TypeDef *USARTx, uint8_t c);
 
 #endif

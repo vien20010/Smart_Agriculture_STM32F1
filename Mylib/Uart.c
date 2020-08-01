@@ -5,7 +5,6 @@ LV_Embedded
 
 #include "Uart.h"
 
-
 uint8_t aTxBuffer[BUFFERSIZE] = "Vien dep trai ";
 uint8_t aRxBuffer[BUFFERSIZE];
 
@@ -63,8 +62,8 @@ void USART_Config(void)
 
     /* RS485 Driver Pin Configuration */
 #ifdef _RS485_
-    RCC_APB2PeriphClockCmd(RS485_DRIVER_CLOCK,ENABLE);
-    Set_Pin_Output(RS485_DRIVER_PORT,RS485_DRIVER_PIN);
+    RCC_APB2PeriphClockCmd(RS485_DRIVER_CLOCK, ENABLE);
+    Set_Pin_Output(RS485_DRIVER_PORT, RS485_DRIVER_PIN);
 #endif
 
     /* Enable USARTy */
@@ -112,7 +111,7 @@ uint16_t USART_Getchar()
 {
     /* waiting for receive data */
     while (!USART_GetFlagStatus(USARTy, USART_FLAG_RXNE))
-        ;
+    {}
     /* read data */
     return USART_ReceiveData(USARTy);
 }
@@ -121,35 +120,36 @@ void USART_PutChar(uint8_t c)
 {
     /* waiting for trans data */
     while (!USART_GetFlagStatus(USARTy, USART_FLAG_TXE))
-        ;
+    {}
     /* Send data */
     USART_SendData(USARTy, c);
 }
 
-void USART_PutString(uint8_t *s)
+void USART_PutString(uint8_t *s, uint8_t num)
 {
-    while (*s)
+    uint8_t i = 0;
+    while (i < num)
     {
-        USART_PutChar(*s++);
+        USART_PutChar(*(s + i));
+        i++;
     }
 }
 
 void RS485_PutChar(USART_TypeDef *USARTx, uint8_t c)
 {
     while (!USART_GetFlagStatus(USARTx, USART_FLAG_TXE))
-    {
-    }
+    {}
     USART_SendData(USARTx, c);
 }
 
-void RS485_PutString(USART_TypeDef *USARTx, uint8_t *s)
+void RS485_PutString(USART_TypeDef *USARTx, uint8_t *s, uint8_t num)
 {
-		int i=0;
-    while (*s)
+    uint8_t i = 0;
+    while (i < num)
     {
-        GPIO_SetBits(RS485_DRIVER_PORT,RS485_DRIVER_PIN);
-        RS485_PutChar(USARTx, *s++);
-				i++;
-        GPIO_SetBits(RS485_DRIVER_PORT,RS485_DRIVER_PIN);
+        GPIO_SetBits(RS485_DRIVER_PORT, RS485_DRIVER_PIN);
+        RS485_PutChar(USARTx, *(s + i));
+        i++;
+        GPIO_SetBits(RS485_DRIVER_PORT, RS485_DRIVER_PIN);
     }
 }
