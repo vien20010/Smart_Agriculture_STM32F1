@@ -25,9 +25,9 @@ void DHT11_Start(void)
     GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST, ENABLE);
 
     Set_Pin_Output(DHT11_PORT, DHT11_PIN);
-    GPIO_WriteBit(DHT11_PORT, DHT11_PIN, 0);
+    GPIO_WriteBit(DHT11_PORT, DHT11_PIN, Bit_RESET);
     SystickDelay_ms(18);
-    GPIO_WriteBit(DHT11_PORT, DHT11_PIN, 1);
+    GPIO_WriteBit(DHT11_PORT, DHT11_PIN, Bit_SET);
     Timer4Delay_us(20);
     Set_Pin_Input(DHT11_PORT, DHT11_PIN);
 }
@@ -50,8 +50,13 @@ int8_t DHT11_Check_Response(void)
         else
             Response = -1;
     }
+    /* Init Timeout 1s */
+    SystickTimerCount = 1000;
     while (GPIO_ReadInputDataBit(DHT11_PORT, DHT11_PIN))
-        ;
+    {
+        if (SystickTimerCount == 0)
+            break;
+    }
     return Response;
 }
 
@@ -67,7 +72,8 @@ uint8_t DHT11_Read(void)
     for (j = 0; j < 8; j++)
     {
         while (!GPIO_ReadInputDataBit(DHT11_PORT, DHT11_PIN))
-            ;
+        {
+        }
         Timer4Delay_us(40);
         if (!GPIO_ReadInputDataBit(DHT11_PORT, DHT11_PIN))
         {
@@ -75,8 +81,13 @@ uint8_t DHT11_Read(void)
         }
         else
             i |= (1 << (7 - j));
+            /* Init Timeout 1s */
+        SystickTimerCount = 1000;
         while (GPIO_ReadInputDataBit(DHT11_PORT, DHT11_PIN))
-            ;
+        {
+            if (SystickTimerCount == 0)
+                break;
+        }
     }
     return i;
 }
@@ -94,23 +105,29 @@ uint8_t DHT11_GetData(void)
 
     uint8_t sum;
     DHT11_Start();
-    DHT11_Check_Response();
-    *data = DHT11_Read();
-    *(data + 1) = DHT11_Read();
-    *(data + 2) = DHT11_Read();
-    *(data + 3) = DHT11_Read();
-    *(data + 4) = DHT11_Read();
-    /* Check sum */
-    for (int i = 0; i < 4; i++)
-        sum += *(data + i);
-    if (*(data + 4) != sum)
-        return 0;
+    if (DHT11_Check_Response())
+    {
+        *data = DHT11_Read();
+        *(data + 1) = DHT11_Read();
+        *(data + 2) = DHT11_Read();
+        *(data + 3) = DHT11_Read();
+        *(data + 4) = DHT11_Read();
+        /* Check sum */
+        for (int i = 0; i < 4; i++)
+            sum += *(data + i);
+        if (*(data + 4) != sum)
+            return 0;
+        else
+        {
+            DHT11_temp = (float)*(data + 2) + (float)*(data + 3) / 10.0;
+            DHT11_humd = (float)*(data) + (float)*(data + 1) / 10.0;
+        }
+        return 1;
+    }
     else
     {
-        DHT11_temp = (float)*(data + 2) + (float)*(data + 3) / 10.0;
-        DHT11_humd = (float)*(data) + (float)*(data + 1) / 10.0;
+        DHT11_temp=0;
+        DHT11_humd=0;
     }
-    return 1;
-
-		
+    return 0;
 }
