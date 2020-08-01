@@ -1,10 +1,10 @@
 .\objects\systick.o: Mylib\Systick.c
 .\objects\systick.o: Mylib\Systick.h
-.\objects\systick.o: Mylib\../Src/stm32f10x.h
-.\objects\systick.o: Mylib\../Src/core_cm3.h
+.\objects\systick.o: .\Src\stm32f10x.h
+.\objects\systick.o: .\Src\core_cm3.h
 .\objects\systick.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\systick.o: Mylib\../Src/system_stm32f10x.h
-.\objects\systick.o: Mylib\../Src/stm32f10x_conf.h
+.\objects\systick.o: .\Src\system_stm32f10x.h
+.\objects\systick.o: .\Src\stm32f10x_conf.h
 .\objects\systick.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
 .\objects\systick.o: .\Src\stm32f10x.h
 .\objects\systick.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h

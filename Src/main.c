@@ -23,12 +23,8 @@ float lux = 0, temp = 0;
 uint8_t txbuffer[21];
 
 
-
-
 int main(void)
 {
-
-	
 	Systick_Configuration();
 	MAX44009_Config();
 	TIM4_Config();
@@ -41,14 +37,14 @@ int main(void)
 		DHT11_GetData();
 		//SystickDelay_ms(500);
 
-		sprintf(txbuffer, "a%0.1f,%0.1f,%8.1f", DHT11_temp, DHT11_humd, lux);
+		sprintf(txbuffer, "a%4.1f,%4.1f,%8.1f", DHT11_temp, DHT11_humd, lux);
 		for (int i = 0; *(txbuffer + i) != '\0'; i++)
 		{
 			//if (*(txbuffer + i) == ' ')
 				//*(txbuffer + i) = '0';
 			crc += *(txbuffer + i);	
 		}
-		RS485_PutString(USARTy,"\n");
+		RS485_PutString(USARTy,txbuffer,21);
 		DBG("%x\n",*(txbuffer+11));
 		*(txbuffer + 19) = (crc >>8) & 0xFF;
 		*(txbuffer + 20) = (crc & 0xFF); 
