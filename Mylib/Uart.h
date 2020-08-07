@@ -7,6 +7,7 @@ LV_Embedded
 
 #include "stm32f10x.h"
 #include "GPIO.h"
+#include "debug.h"
 
 #define BUFFERSIZE              100
 

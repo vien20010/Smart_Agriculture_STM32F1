@@ -1,7 +1,7 @@
 #ifndef	__DEBUG_H
 #define	__DEBUG_H
 
-#define	DEBUG
+//#define	DEBUG
 
 #ifdef DEBUG
 	#define DBG(fmt,...) printf("%s:  %s:  %d: "fmt, __FILE__, __FUNCTION__, __LINE__,##__VA_ARGS__) 

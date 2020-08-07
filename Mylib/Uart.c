@@ -41,7 +41,7 @@ void USART_Config(void)
     USART_InitStructure.USART_StopBits = USART_StopBits_1;
     /* When using Parity the word length must be configured to 9 bits */
     USART_InitStructure.USART_Parity = USART_Parity_No;
-    USART_InitStructure.USART_BaudRate = 115200;
+    USART_InitStructure.USART_BaudRate = 9600;
     USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 
@@ -147,6 +147,7 @@ void RS485_PutString(USART_TypeDef *USARTx, uint8_t *s, uint8_t num)
     uint8_t i = 0;
     while (i < num)
     {
+				//DBG("%d\n",i);
         GPIO_SetBits(RS485_DRIVER_PORT, RS485_DRIVER_PIN);
         RS485_PutChar(USARTx, *(s + i));
         i++;

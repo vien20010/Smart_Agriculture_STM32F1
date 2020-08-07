@@ -20,7 +20,7 @@
 #endif /* __GNUC__ */
 
 float lux = 0, temp = 0;
-uint8_t txbuffer[21];
+uint8_t txbuffer[22];
 
 
 int main(void)
@@ -42,20 +42,21 @@ int main(void)
 		{
 			//if (*(txbuffer + i) == ' ')
 				//*(txbuffer + i) = '0';
-			crc += *(txbuffer + i);	
+			crc += *(txbuffer +  i);	
 		}
-		RS485_PutString(USARTy,txbuffer,21);
-		DBG("%x\n",*(txbuffer+11));
+		
 		*(txbuffer + 19) = (crc >>8) & 0xFF;
 		*(txbuffer + 20) = (crc & 0xFF); 
-		
+		*(txbuffer + 21) = 'z';
 		DBG("%x\n",crc);
-		DBG("%x\n",*(txbuffer + 19));
-		DBG("%x\n",*(txbuffer + 20));
-		//RS485_PutString(USARTy,txbuffer);
+		DBG("%c\n",*(txbuffer + 19));
+		DBG("%c\n",*(txbuffer + 20));
+		DBG("%c\n",*(txbuffer + 21));
+		DBG("%x\n",*(txbuffer + 22));
+		RS485_PutString(USARTy,txbuffer,22);
 		//RS485_PutChar(USARTy,'\n');
 		DBG("\n %d \n",strlen(txbuffer));
-		DBG("\n %s",txbuffer);
+		//DBG("\n %s",txbuffer)
 	}
 }
 
